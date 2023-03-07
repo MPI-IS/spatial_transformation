@@ -55,8 +55,13 @@ Transformation Transformation::inverse() const
 
 Eigen::Matrix4d Transformation::matrix() const
 {
-    Eigen::Affine3d tf = Eigen::Translation3d(translation) * rotation;
-    return tf.matrix();
+    return isometry().matrix();
+}
+
+Eigen::Isometry3d Transformation::isometry() const
+{
+    Eigen::Isometry3d iso = Eigen::Translation3d(translation) * rotation;
+    return iso;
 }
 
 EulerTransform::EulerTransform()
