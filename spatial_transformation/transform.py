@@ -7,6 +7,8 @@ import typing
 import numpy as np
 from scipy.spatial.transform import Rotation
 
+from . import cpp
+
 if typing.TYPE_CHECKING:
     import numpy.typing as npt
 
@@ -49,6 +51,11 @@ class Transformation:
         """
         return cls()
 
+    @classmethod
+    def from_cpp(cls, cpp_tf: cpp.Transformation) -> Transformation:
+        """Construct from cpp.Transformation."""
+        return cls(rotation=cpp_tf.get_rotation(), translation=cpp_tf.translation)
+
     def __mul__(self, other: Transformation) -> Transformation:
         """Compose this transformation with the other."""
         r_new = self.rotation * other.rotation
@@ -71,6 +78,13 @@ class Transformation:
         mat[:3, :3] = self.rotation.as_matrix()
         mat[:3, 3] = self.translation
         return mat
+
+    def as_cpp(self) -> cpp.Transformation:
+        """Convert to cpp.Transformation."""
+        cpp_tf = cpp.Transformation()
+        cpp_tf.translation = self.translation
+        cpp_tf.set_rotation(self.rotation.as_quat())
+        return cpp_tf
 
     def __repr__(self) -> str:
         """Convert to string representation."""

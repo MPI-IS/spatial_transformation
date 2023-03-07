@@ -65,3 +65,18 @@ def test_inv():
 
     inv_mat = np.linalg.inv(tf.as_matrix())
     np.testing.assert_array_almost_equal(inv_tf.as_matrix(), inv_mat)
+
+
+def test_convert_cpp():
+    quaternion = (0.37642246, -0.34991817, 0.51694777, -0.68456439)
+    tf = Transformation(Rotation.from_quat(quaternion), [2.1, -0.2, 0.0])
+
+    # from Python to C++
+    cpp_tf = tf.as_cpp()
+    np.testing.assert_array_almost_equal(cpp_tf.translation, [2.1, -0.2, 0.0])
+    np.testing.assert_array_almost_equal(cpp_tf.get_rotation(), quaternion)
+
+    # and back to Python
+    tf2 = Transformation.from_cpp(cpp_tf)
+    np.testing.assert_array_almost_equal(tf2.translation, [2.1, -0.2, 0.0])
+    np.testing.assert_array_almost_equal(tf2.rotation.as_quat(), quaternion)
