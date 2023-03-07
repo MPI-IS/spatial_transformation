@@ -54,7 +54,10 @@ public:
     Transformation inverse() const;
 
     //! Convert transformation to a homogeneous matrix (4x4).
-    Eigen::Matrix4d matrix() const;  // TODO use Isometry3d instead of matrix?
+    Eigen::Matrix4d matrix() const;
+
+    //! Convert transformation to an isometry.
+    Eigen::Isometry3d isometry() const;
 
     // for serialisation
     template <class Archive>
