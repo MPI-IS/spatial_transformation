@@ -35,7 +35,7 @@ ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR ${PROJECT_NAME})
 
 
 add_library(transformation
-    src/transform.cpp
+    src/transformation.cpp
 )
 target_include_directories(transformation PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -87,15 +87,15 @@ if(BUILD_TESTING)
     # root. Python tests that use the C++ bindings need to be run in a different
     # directory, otherwise the local Python source will shadow the installed
     # package and thus the pybind11 modules will be missing.
-    ament_add_pytest_test(test_transform_py tests/test_transform.py
+    ament_add_pytest_test(test_transformation_py tests/test_transformation.py
         WORKING_DIRECTORY /tmp)
 
     # C++ tests
-    ament_add_gmock(test_transform_cpp
-        tests/test_transform.cpp
+    ament_add_gmock(test_transformation_cpp
+        tests/test_transformation.cpp
     )
-    target_include_directories(test_transform_cpp PRIVATE include)
-    target_link_libraries(test_transform_cpp
+    target_include_directories(test_transformation_cpp PRIVATE include)
+    target_link_libraries(test_transformation_cpp
         transformation
         fmt::fmt
         serialization_utils::serialization_utils

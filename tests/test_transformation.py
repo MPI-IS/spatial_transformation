@@ -2,7 +2,7 @@
 """Test the Transformation class."""
 import numpy as np
 
-from spatial_transformation.transform import Transformation, Rotation
+from spatial_transformation import Transformation, Rotation
 
 
 def test_identity():

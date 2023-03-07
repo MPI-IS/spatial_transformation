@@ -10,7 +10,7 @@
 
 #include <serialization_utils/cereal_json.hpp>
 
-#include <spatial_transformation/transform.hpp>
+#include <spatial_transformation/transformation.hpp>
 
 #include "utils.hpp"
 
