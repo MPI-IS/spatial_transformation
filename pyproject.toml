@@ -1,5 +1,6 @@
 [tool.ruff]
-# enable all and disable a few via ignore below
+# ruff has a lot of rules, many of which are useful.  It's easier to first enable all
+# and then disable the few undesired ones via extend-ignore below
 select = ["ALL"]
 extend-ignore = [
     "BLE",
