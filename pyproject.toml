@@ -1,0 +1,58 @@
+[tool.ruff]
+# ruff has a lot of rules, many of which are useful.  It's easier to first enable all
+# and then disable the few undesired ones via extend-ignore below
+select = ["ALL"]
+extend-ignore = [
+    "BLE",
+    "COM",
+    "EM",
+    "FBT",
+    "INP",
+    "PTH",
+    "S",
+    "T20",
+    "UP",
+    "A003",
+    "ANN101",
+    "ANN102",
+    "ANN401",
+    "D105",
+    "D107",
+    "D205",
+    "D212",
+    "G004",
+    "I001",
+    "N806",
+    "PTH123",
+    "TRY003",
+    "TRY400",
+]
+target-version = "py38"
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.per-file-ignores]
+"*.pyi" = ["ALL"]
+"__init__.py" = ["F401"]  # unused imports
+"tests/*" = ["D", "ANN", "PLR2004"]
+"scripts/*" = ["D"]
+
+
+[[tool.mypy.overrides]]
+module = [
+    "spatial_transformation.cpp",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    "scipy.*",
+]
+ignore_missing_imports = true
+
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
