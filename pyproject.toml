@@ -41,6 +41,12 @@ convention = "google"
 
 [[tool.mypy.overrides]]
 module = [
+    "spatial_transformation.cpp",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
     "scipy.*",
 ]
 ignore_missing_imports = true
