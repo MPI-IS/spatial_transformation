@@ -87,7 +87,7 @@ if(BUILD_TESTING)
     # root. Python tests that use the C++ bindings need to be run in a different
     # directory, otherwise the local Python source will shadow the installed
     # package and thus the pybind11 modules will be missing.
-    ament_add_pytest_test(test_transform_py tests/test_transform.py
+    ament_add_pytest_test(test_transformation_py tests/test_transformation.py
         WORKING_DIRECTORY /tmp)
 
     # C++ tests
