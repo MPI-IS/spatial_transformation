@@ -35,7 +35,7 @@ ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR ${PROJECT_NAME})
 
 
 add_library(transformation
-    src/transform.cpp
+    src/transformation.cpp
 )
 target_include_directories(transformation PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -91,11 +91,11 @@ if(BUILD_TESTING)
         WORKING_DIRECTORY /tmp)
 
     # C++ tests
-    ament_add_gmock(test_transform_cpp
-        tests/test_transform.cpp
+    ament_add_gmock(test_transformation_cpp
+        tests/test_transformation.cpp
     )
-    target_include_directories(test_transform_cpp PRIVATE include)
-    target_link_libraries(test_transform_cpp
+    target_include_directories(test_transformation_cpp PRIVATE include)
+    target_link_libraries(test_transformation_cpp
         transformation
         fmt::fmt
         serialization_utils::serialization_utils

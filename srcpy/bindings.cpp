@@ -12,7 +12,7 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl/filesystem.h>
 
-#include <spatial_transformation/transform.hpp>
+#include <spatial_transformation/transformation.hpp>
 
 PYBIND11_MODULE(cpp, m)
 {
