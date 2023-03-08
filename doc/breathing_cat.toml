@@ -3,7 +3,9 @@ exclude_patterns = ["json.hpp", "fmt.hpp", "{{PACKAGE_DIR}}/srcpy/*"]
 
 [intersphinx.mapping]
 pam_documentation = "https://intelligent-soft-robots.github.io/pam_documentation"
+scipy = "https://docs.scipy.org/doc/scipy/"
+numpy = "https://numpy.org/doc/stable/"
 
-# [mainpage]
-# title = "Custom Title"
-# auto_general_docs = false
+[mainpage]
+#title = "Custom Title"
+auto_general_docs = false

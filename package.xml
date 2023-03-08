@@ -7,8 +7,8 @@ schematypens="http://www.w3.org/2001/XMLSchema"?>
     <name>spatial_transformation</name>
     <version>0.9.0</version>
     <description>
-        Utility package that provides classes and functions to handle spatial
-        transformations in both C++ and Python.
+        Utility package for working with spatial transformations in both C++ and
+        Python.
     </description>
     <author email="felix.widmaier@tue.mpg.de">Felix Widmaier</author>
     <maintainer email="felix.widmaier@tue.mpg.de">Felix Widmaier</maintainer>
