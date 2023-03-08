@@ -13,8 +13,10 @@
 #include "utils.hpp"
 
 using spatial_transformation::compute_mean_transform_error;
+using spatial_transformation::compute_transformation_between_point_clouds;
 using spatial_transformation::json;
 using spatial_transformation::json_point_cloud_to_eigen;
+using spatial_transformation::read_point_clouds_from_json_file;
 
 TEST(TestPointcloud, compute_mean_transform_error)
 {
@@ -118,6 +120,62 @@ TEST(TestPointcloud, json_point_cloud_to_eigen_bad_input)
 
     EXPECT_THROW({ json_point_cloud_to_eigen(data_good, "from", "bad"); },
                  json::out_of_range);
+}
+
+TEST(TestPointcloud, read_joint_clouds_from_json_file)
+{
+    Eigen::Matrix3Xd from, to;
+    std::tie(from, to) = read_point_clouds_from_json_file(
+        "tests/data/pointcloud.json", "from", "to");
+
+    Eigen::Matrix3Xd expected_from, expected_to;
+    expected_from.resize(Eigen::NoChange, 4);
+    expected_to.resize(Eigen::NoChange, 4);
+    expected_from.col(0) << 0.0, 0.0, 0.0;
+    expected_from.col(1) << 1.0, 0.0, 0.0;
+    expected_from.col(2) << 1.1, 0.2, 0.3;
+    expected_from.col(3) << 0.0, 1.0, 1.0;
+    expected_to.col(0) << 1.0, 0.0, 0.0;
+    expected_to.col(1) << 2.0, 0.0, 0.0;
+    expected_to.col(2) << 2.5, 0.6, 0.7;
+    expected_to.col(3) << 1.0, -1.0, 1.0;
+
+    ASSERT_MATRIX_ALMOST_EQUAL(from, expected_from);
+    ASSERT_MATRIX_ALMOST_EQUAL(to, expected_to);
+}
+
+TEST(TestPointcloud, read_joint_clouds_from_json_file__file_not_found)
+{
+    EXPECT_THROW(
+        {
+            read_point_clouds_from_json_file(
+                "tests/data/does_not_exist.json", "from", "to");
+        },
+        std::system_error);
+}
+
+TEST(TestPointcloud, compute_transformation_between_point_clouds)
+{
+    Eigen::Matrix3Xd from_points, to_points;
+    from_points.resize(Eigen::NoChange, 4);
+    to_points.resize(Eigen::NoChange, 4);
+    from_points.col(0) << 0.0, 0.0, 0.0;
+    from_points.col(1) << 1.0, 0.0, 0.0;
+    from_points.col(2) << 1.1, 0.2, 0.3;
+    from_points.col(3) << 0.0, 1.0, 1.0;
+    to_points.col(0) << 1.0, 0.0, -0.3;
+    to_points.col(1) << 2.0, 0.0, -0.3;
+    to_points.col(2) << 2.1, 0.2, 0.0;
+    to_points.col(3) << 1.0, 1.0, 0.7;
+
+    Eigen::Isometry3d tf;
+    double error;
+    std::tie(tf, error) =
+        compute_transformation_between_point_clouds(from_points, to_points);
+
+    EXPECT_NEAR(error, 0.0, 0.0001);
+    ASSERT_MATRIX_ALMOST_EQUAL(tf.translation(), Eigen::Vector3d(1.0, 0, -0.3));
+    ASSERT_MATRIX_ALMOST_EQUAL(tf.rotation(), Eigen::Matrix3d::Identity());
 }
 
 int main(int argc, char **argv)

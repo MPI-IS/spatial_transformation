@@ -1,5 +1,5 @@
 [doxygen]
-exclude_patterns = ["json.hpp"]
+exclude_patterns = ["json.hpp", "fmt.hpp", "{{PACKAGE_DIR}}/srcpy/*"]
 
 [intersphinx.mapping]
 pam_documentation = "https://intelligent-soft-robots.github.io/pam_documentation"

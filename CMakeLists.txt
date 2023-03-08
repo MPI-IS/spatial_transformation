@@ -55,6 +55,7 @@ target_include_directories(pointcloud PUBLIC
 )
 target_link_libraries(pointcloud
     Eigen3::Eigen
+    fmt::fmt
 )
 
 
