@@ -14,7 +14,17 @@ if typing.TYPE_CHECKING:
 
 
 class Transformation:
-    """Represents a 3d-transformation consisting of rotation and translation."""
+    """Represents a 3d-transformation consisting of rotation and translation.
+
+    The transformation consists of a rotation R and a translation T with the
+    rotation being applied first.  So the transformed version v' of a vector v is
+    computed as ``v' = R*v + T``.
+    """
+
+    rotation: Rotation
+    """Rotation part of the transformation."""
+    translation: np.ndarray
+    """Translation part of the transformation."""
 
     def __init__(
         self,
@@ -53,7 +63,7 @@ class Transformation:
 
     @classmethod
     def from_cpp(cls, cpp_tf: cpp.Transformation) -> Transformation:
-        """Construct from cpp.Transformation."""
+        """Construct from :class:`cpp.Transformation`."""
         return cls(rotation=cpp_tf.get_rotation(), translation=cpp_tf.translation)
 
     def __mul__(self, other: Transformation) -> Transformation:
@@ -80,7 +90,7 @@ class Transformation:
         return mat
 
     def as_cpp(self) -> cpp.Transformation:
-        """Convert to cpp.Transformation."""
+        """Convert to :class:`cpp.Transformation`."""
         cpp_tf = cpp.Transformation()
         cpp_tf.translation = self.translation
         cpp_tf.set_rotation(self.rotation.as_quat())

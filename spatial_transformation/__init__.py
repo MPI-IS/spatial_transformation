@@ -2,3 +2,6 @@
 """Utility package for working with spatial transformations."""
 
 from ._transformation import Transformation, Rotation
+
+
+__all__ = ("Transformation",)
